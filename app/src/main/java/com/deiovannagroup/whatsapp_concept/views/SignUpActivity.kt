@@ -1,32 +1,31 @@
 package com.deiovannagroup.whatsapp_concept.views
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.deiovannagroup.whatsapp_concept.databinding.ActivityLoginBinding
+import com.deiovannagroup.whatsapp_concept.R
+import com.deiovannagroup.whatsapp_concept.databinding.ActivitySignUpBinding
 
-class LoginActivity : AppCompatActivity() {
+class SignUpActivity : AppCompatActivity() {
     private val binding by lazy {
-        ActivityLoginBinding.inflate(layoutInflater)
+        ActivitySignUpBinding.inflate(layoutInflater)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setEdgeToEdgeLayout()
-        initListeners()
+
+        initToolbar()
     }
 
-    private fun initListeners() {
-        binding.textSignUp.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    SignUpActivity::class.java,
-                )
-            )
+    private fun initToolbar() {
+        val toolbar = binding.includeToolbar.tbMain
+        setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            title = getString(R.string.sign_up)
+            setDisplayHomeAsUpEnabled(true)
         }
     }
 
