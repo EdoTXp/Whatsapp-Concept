@@ -6,4 +6,5 @@
     <string name="not_have_account_text">Don\'t have an account yet?</string>
     <string name="sign_up">Sign up</string>
     <string name="login_text" translatable="false">Login</string>
+    <string name="insert_your_name_hint">Insert your name</string>
 </resources>

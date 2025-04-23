@@ -5,4 +5,5 @@
     <string name="insert_your_password_hint">Digite a sua senha</string>
     <string name="not_have_account_text">Ainda não tem uma conta?</string>
     <string name="sign_up">Cadastre-se</string>
+    <string name="insert_your_name_hint">Digite o seu nome</string>
 </resources>

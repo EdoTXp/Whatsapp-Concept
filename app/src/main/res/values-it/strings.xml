@@ -5,4 +5,5 @@
     <string name="insert_your_password_hint">Inserisci la tua password</string>
     <string name="not_have_account_text">Non hai ancora un\'account?</string>
     <string name="sign_up">Registrati</string>
+    <string name="insert_your_name_hint">Inserisci il tuo nome</string>
 </resources>
