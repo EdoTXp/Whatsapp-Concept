@@ -6,4 +6,9 @@
     <string name="not_have_account_text">Ainda não tem uma conta?</string>
     <string name="sign_up">Cadastre-se</string>
     <string name="insert_your_name_hint">Digite o seu nome</string>
+    <string name="empty_name">O nome não pode estar vazio.</string>
+    <string name="empty_email">O e-mail não pode estar vazio.</string>
+    <string name="empty_password">A senha não pode estar vazia.</string>
+    <string name="success_to_sign_up">Sucesso ao fazer o cadastro</string>
+    <string name="error_to_sign_up">Erro ao fazer o cadastro</string>
 </resources>

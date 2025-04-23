@@ -17,10 +17,10 @@
             android:exported="false"
             android:parentActivityName=".views.LoginActivity" />
         <activity
-            android:name=".views.LoginActivity"
+            android:name=".views.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".views.MainActivity"
+            android:name=".views.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

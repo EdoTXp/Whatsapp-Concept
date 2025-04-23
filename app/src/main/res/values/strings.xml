@@ -7,4 +7,9 @@
     <string name="sign_up">Sign up</string>
     <string name="login_text" translatable="false">Login</string>
     <string name="insert_your_name_hint">Insert your name</string>
+    <string name="empty_name">Name cannot be empty.</string>
+    <string name="empty_email">Email cannot be empty.</string>
+    <string name="empty_password">Password cannot be empty.</string>
+    <string name="success_to_sign_up">Success to sign up</string>
+    <string name="error_to_sign_up">Error on sign Up</string>
 </resources>
