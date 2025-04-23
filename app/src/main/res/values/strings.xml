@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Whatsapp-Concept</string>
+    <string name="app_name" translatable="false">Whatsapp-Concept</string>
+    <string name="logo_app_green_content_description">Logo App Green</string>
+    <string name="insert_your_email_hint">Insert your e-mail</string>
+    <string name="insert_your_password_hint">Insert your password</string>
+    <string name="not_have_account_text">Don\'t have an account yet?</string>
+    <string name="sign_up_text">Sign up</string>
+    <string name="login_text" translatable="false">Login</string>
 </resources>

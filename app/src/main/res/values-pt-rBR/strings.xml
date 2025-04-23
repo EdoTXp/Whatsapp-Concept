@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="logo_app_green_content_description">Logo do app verde</string>
+    <string name="insert_your_email_hint">Digite o seu e-mail</string>
+    <string name="insert_your_password_hint">Digite a sua senha</string>
+    <string name="not_have_account_text">Ainda não tem uma conta?</string>
+    <string name="sign_up_text">Cadastre-se</string>
+</resources>
