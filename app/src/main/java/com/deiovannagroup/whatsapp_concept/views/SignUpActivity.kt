@@ -9,7 +9,9 @@ import androidx.core.view.WindowInsetsCompat
 import com.deiovannagroup.whatsapp_concept.R
 import com.deiovannagroup.whatsapp_concept.databinding.ActivitySignUpBinding
 import com.deiovannagroup.whatsapp_concept.repositories.AuthRepository
+import com.deiovannagroup.whatsapp_concept.repositories.UserRepository
 import com.deiovannagroup.whatsapp_concept.services.FirebaseAuthService
+import com.deiovannagroup.whatsapp_concept.services.FirebaseFirestoreService
 import com.deiovannagroup.whatsapp_concept.utils.showMessage
 import com.deiovannagroup.whatsapp_concept.viewmodels.SignUpViewModel
 import com.google.android.material.textfield.TextInputLayout
@@ -23,6 +25,9 @@ class SignUpActivity : AppCompatActivity() {
         SignUpViewModel(
             AuthRepository(
                 FirebaseAuthService(),
+            ),
+            UserRepository(
+                FirebaseFirestoreService(),
             ),
         )
     }
@@ -42,9 +47,16 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun addObserver() {
-        signUpViewModel.registerResult.observe(this) { result ->
+        signUpViewModel.authResult.observe(this) { result ->
             result.onSuccess { user ->
                 showMessage(getString(R.string.success_to_sign_up))
+
+                signUpViewModel.saveUser(
+                    user.id,
+                    name,
+                    email,
+                )
+
                 startActivity(
                     Intent(
                         this,
@@ -58,8 +70,20 @@ class SignUpActivity : AppCompatActivity() {
                 )
             }
         }
-    }
 
+        signUpViewModel.userResult.observe(this) { result ->
+            result.onSuccess {
+                showMessage(
+                    getString(R.string.success_to_sign_up),
+                )
+            }
+            result.onFailure { error ->
+                showMessage(
+                    "${getString(R.string.error_to_sign_up)}: ${error.message}",
+                )
+            }
+        }
+    }
 
     private fun initToolbar() {
         val toolbar = binding.includeToolbar.tbMain
@@ -73,20 +97,9 @@ class SignUpActivity : AppCompatActivity() {
     private fun initListeners() {
         binding.btnSignUp.setOnClickListener {
             if (validateAllFields())
-                signUpUser(
-                    email,
-                    password,
-                )
+                signUpViewModel.signUp(email, password)
         }
     }
-
-    private fun SignUpActivity.signUpUser(
-        email: String,
-        password: String
-    ) {
-        signUpViewModel.signUp(email, password)
-    }
-
 
     private fun validateAllFields(): Boolean {
         name = binding.editName.text.toString().trim()
