@@ -18,4 +18,7 @@
     <string name="sign_out_message">Você realmente quer sair?</string>
     <string name="cancel">Cancelar</string>
     <string name="contacts">CONTACTOS</string>
+    <string name="update">Atualizar</string>
+    <string name="edit_profile">Editar Perfil</string>
+    <string name="update_profile_photo_content_description">Atualizar foto do perfil</string>
 </resources>

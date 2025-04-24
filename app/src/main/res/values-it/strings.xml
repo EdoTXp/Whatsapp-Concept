@@ -18,4 +18,7 @@
     <string name="sign_out_message">Vuoi davvero disconnetterti?</string>
     <string name="cancel">Annulla</string>
     <string name="contacts">CONTATTI</string>
+    <string name="update">Aggiornare</string>
+    <string name="edit_profile">Modificare Profile</string>
+    <string name="update_profile_photo_content_description">Aggiorna la foto del profilo</string>
 </resources>

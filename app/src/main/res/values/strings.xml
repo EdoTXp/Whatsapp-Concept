@@ -20,4 +20,7 @@
     <string name="cancel">Cancel</string>
     <string name="chats" translatable="false">CHATS</string>
     <string name="contacts">CONTACTS</string>
+    <string name="update">Update</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="update_profile_photo_content_description">Update profile photo</string>
 </resources>

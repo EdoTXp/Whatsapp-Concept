@@ -12,5 +12,9 @@
         <item name="tint">@color/white</item>
     </style>
 
+    <style name="CircularImageShape">
+        <item name="cornerSize">50%</item>
+    </style>
+
     <style name="Theme.WhatsappConcept" parent="Base.Theme.WhatsappConcept" />
 </resources>
