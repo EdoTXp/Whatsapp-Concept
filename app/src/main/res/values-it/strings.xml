@@ -11,4 +11,6 @@
     <string name="empty_password">La password non può essere vuota</string>
     <string name="success_to_sign_up">Registrazione avvenuta con sucesso</string>
     <string name="error_to_sign_up">"Errore nel registrare "</string>
+    <string name="user_logged_successfully">Utente ha effettuato l\'accesso con successo!</string>
+    <string name="user_not_logged">Errore durante l\'accesso dell\'utente</string>
 </resources>

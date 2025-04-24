@@ -6,17 +6,70 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.deiovannagroup.whatsapp_concept.R
 import com.deiovannagroup.whatsapp_concept.databinding.ActivityLoginBinding
+import com.deiovannagroup.whatsapp_concept.repositories.AuthRepository
+import com.deiovannagroup.whatsapp_concept.services.FirebaseAuthService
+import com.deiovannagroup.whatsapp_concept.utils.showMessage
+import com.deiovannagroup.whatsapp_concept.viewmodels.LoginViewModel
+import com.google.android.material.textfield.TextInputLayout
 
 class LoginActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
 
+    private val loginViewModel by lazy {
+        LoginViewModel(
+            AuthRepository(
+                FirebaseAuthService()
+            ),
+        )
+    }
+
+    private var email = ""
+    private var password = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setEdgeToEdgeLayout()
         initListeners()
+
+        addObservers()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (loginViewModel.checkUserIsLogged()) {
+            startActivity(
+                Intent(
+                    this,
+                    MainActivity::class.java,
+                ),
+            )
+        }
+    }
+
+    private fun addObservers() {
+        loginViewModel.loginResult.observe(this) { result ->
+            result.onSuccess {
+                showMessage(
+                    getString(R.string.user_logged_successfully),
+                )
+
+                startActivity(
+                    Intent(
+                        this,
+                        MainActivity::class.java,
+                    )
+                )
+            }
+            result.onFailure { error ->
+                showMessage(
+                    "${getString(R.string.user_not_logged)}: ${error.message}",
+                )
+            }
+        }
     }
 
     private fun initListeners() {
@@ -27,6 +80,48 @@ class LoginActivity : AppCompatActivity() {
                     SignUpActivity::class.java,
                 )
             )
+        }
+
+        binding.btnLogin.setOnClickListener {
+            if (validateAllFields()) {
+                loginViewModel.signInUser(
+                    email,
+                    password,
+                )
+            }
+        }
+    }
+
+    private fun validateAllFields(): Boolean {
+        email = binding.editLoginEmail.text.toString().trim()
+        password = binding.editLoginPassword.text.toString().trim()
+
+
+        val isEmailValid = validateField(
+            email,
+            getString(R.string.empty_email),
+            binding.textInputLoginEmail,
+        )
+        val isPasswordValid = validateField(
+            password,
+            getString(R.string.empty_password),
+            binding.textInputLoginPassword,
+        )
+
+        return isEmailValid && isPasswordValid
+    }
+
+    private fun validateField(
+        value: String,
+        errorMessage: String,
+        layout: TextInputLayout,
+    ): Boolean {
+        return if (value.isEmpty()) {
+            layout.error = errorMessage
+            false
+        } else {
+            layout.error = null
+            true
         }
     }
 

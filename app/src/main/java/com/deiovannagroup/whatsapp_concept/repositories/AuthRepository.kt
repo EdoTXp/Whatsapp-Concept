@@ -10,4 +10,13 @@ class AuthRepository(
     suspend fun signUpUser(email: String, password: String): Result<UserModel> {
         return authService.signUpUser(email, password)
     }
+
+    suspend fun signInUser(email: String, password: String): Result<UserModel> {
+        return authService.signInUser(email, password)
+    }
+
+    fun checkUserIsLogged() : Boolean {
+        return authService.checkUserIsLogged()
+    }
+
 }

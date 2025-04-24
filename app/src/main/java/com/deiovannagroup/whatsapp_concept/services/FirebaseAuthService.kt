@@ -46,4 +46,38 @@ class FirebaseAuthService {
             return Result.failure(Throwable("Unknown error: ${e.message}"))
         }
     }
+
+    suspend fun signInUser(email: String, password: String): Result<UserModel> {
+        try {
+            val loginResult = auth.signInWithEmailAndPassword(
+                email,
+                password,
+            ).await()
+
+            val user = loginResult.user
+            if (user == null) {
+                return Result.failure(Throwable("User not found"))
+            }
+
+            return Result.success(
+                UserModel(
+                    user.uid,
+                    user.displayName,
+                    user.email,
+                    user.photoUrl.toString(),
+                ),
+            )
+        } catch (e: FirebaseAuthInvalidCredentialsException) {
+            return Result.failure(Throwable("Invalid email or password: ${e.message}"))
+        } catch (e: FirebaseAuthException) {
+            return Result.failure(Throwable("Authentication error: ${e.message}"))
+        } catch (e: Exception) {
+            return Result.failure(Throwable("Unknown error: ${e.message}"))
+        }
+    }
+
+    fun checkUserIsLogged(): Boolean {
+        val currentUser = auth.currentUser
+        return currentUser != null
+    }
 }
