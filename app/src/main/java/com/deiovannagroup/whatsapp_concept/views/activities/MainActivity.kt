@@ -1,4 +1,4 @@
-package com.deiovannagroup.whatsapp_concept.views
+package com.deiovannagroup.whatsapp_concept.views.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -16,6 +16,8 @@ import com.deiovannagroup.whatsapp_concept.databinding.ActivityMainBinding
 import com.deiovannagroup.whatsapp_concept.repositories.AuthRepository
 import com.deiovannagroup.whatsapp_concept.services.FirebaseAuthService
 import com.deiovannagroup.whatsapp_concept.viewmodels.MainViewModel
+import com.deiovannagroup.whatsapp_concept.views.adapters.ViewPagerAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy {
@@ -35,6 +37,27 @@ class MainActivity : AppCompatActivity() {
         setEdgeToEdgeLayout()
 
         initToolbar()
+        initTabsNavigation()
+    }
+
+    private fun initTabsNavigation() {
+        val tabLayout = binding.tabLayoutMain
+        val viewPager = binding.viewPageMain
+
+        val tabs = resources.getStringArray(R.array.tabs).asList()
+        viewPager.adapter = ViewPagerAdapter(
+            tabs,
+            supportFragmentManager,
+            lifecycle,
+        )
+
+        tabLayout.isTabIndicatorFullWidth = true
+        TabLayoutMediator(
+            tabLayout,
+            viewPager,
+        ) { tab, position ->
+            tab.text = tabs[position]
+        }.attach()
     }
 
     private fun initToolbar() {

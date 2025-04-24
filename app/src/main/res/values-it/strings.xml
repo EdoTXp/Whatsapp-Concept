@@ -17,4 +17,5 @@
     <string name="sign_out">Uscire</string>
     <string name="sign_out_message">Vuoi davvero disconnetterti?</string>
     <string name="cancel">Annulla</string>
+    <string name="contacts">CONTATTI</string>
 </resources>

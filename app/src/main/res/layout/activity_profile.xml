@@ -4,6 +4,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.ProfileActivity">
+    tools:context=".views.activities.ProfileActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

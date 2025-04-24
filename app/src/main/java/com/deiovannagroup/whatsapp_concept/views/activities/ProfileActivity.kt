@@ -1,4 +1,4 @@
-package com.deiovannagroup.whatsapp_concept.views
+package com.deiovannagroup.whatsapp_concept.views.activities
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

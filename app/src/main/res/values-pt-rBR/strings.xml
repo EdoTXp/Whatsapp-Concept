@@ -17,4 +17,5 @@
     <string name="sign_out">Sair</string>
     <string name="sign_out_message">Você realmente quer sair?</string>
     <string name="cancel">Cancelar</string>
+    <string name="contacts">CONTACTOS</string>
 </resources>

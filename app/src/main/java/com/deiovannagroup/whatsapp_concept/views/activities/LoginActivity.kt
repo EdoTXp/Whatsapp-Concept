@@ -1,4 +1,4 @@
-package com.deiovannagroup.whatsapp_concept.views
+package com.deiovannagroup.whatsapp_concept.views.activities
 
 import android.content.Intent
 import android.os.Bundle
