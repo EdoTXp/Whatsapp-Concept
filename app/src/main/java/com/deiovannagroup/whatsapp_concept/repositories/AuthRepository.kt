@@ -15,6 +15,10 @@ class AuthRepository(
         return authService.signInUser(email, password)
     }
 
+    fun signOutUser() {
+        authService.signOutUser()
+    }
+
     fun checkUserIsLogged() : Boolean {
         return authService.checkUserIsLogged()
     }

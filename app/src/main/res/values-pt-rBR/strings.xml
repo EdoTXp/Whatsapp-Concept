@@ -11,6 +11,10 @@
     <string name="empty_password">A senha não pode estar vazia.</string>
     <string name="success_to_sign_up">Sucesso ao fazer o cadastro</string>
     <string name="error_to_sign_up">Erro ao fazer o cadastro</string>
-    <string name="user_logged_successfully">Usuario logado com sucesso!</string>
+    <string name="user_logged_successfully">Usuário logado com sucesso!</string>
     <string name="user_not_logged">Erro no login do usuário</string>
+    <string name="profile">Perfil</string>
+    <string name="sign_out">Sair</string>
+    <string name="sign_out_message">Você realmente quer sair?</string>
+    <string name="cancel">Cancelar</string>
 </resources>

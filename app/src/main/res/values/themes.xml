@@ -3,6 +3,13 @@
     <style name="Base.Theme.WhatsappConcept" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="actionOverflowButtonStyle">
+            @style/ActionOverflowButton
+        </item>
+    </style>
+
+    <style name="ActionOverflowButton" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="tint">@color/white</item>
     </style>
 
     <style name="Theme.WhatsappConcept" parent="Base.Theme.WhatsappConcept" />

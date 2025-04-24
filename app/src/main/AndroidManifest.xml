@@ -13,6 +13,9 @@
         android:theme="@style/Theme.WhatsappConcept"
         tools:targetApi="31">
         <activity
+            android:name=".views.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.SignUpActivity"
             android:exported="false"
             android:parentActivityName=".views.LoginActivity" />

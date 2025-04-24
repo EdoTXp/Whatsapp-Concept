@@ -14,4 +14,8 @@
     <string name="error_to_sign_up">Error on sign Up</string>
     <string name="user_logged_successfully">User logged successfully!</string>
     <string name="user_not_logged">Error on login user</string>
+    <string name="profile">Profile</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="sign_out_message">Do you really want to sign out?</string>
+    <string name="cancel">Cancel</string>
 </resources>
