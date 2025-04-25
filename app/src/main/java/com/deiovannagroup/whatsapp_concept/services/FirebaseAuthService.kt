@@ -80,6 +80,17 @@ class FirebaseAuthService {
         auth.signOut()
     }
 
+    fun getCurrentLoggedUser(): UserModel? {
+        return auth.currentUser?.let {
+            UserModel(
+                it.uid,
+                it.displayName,
+                it.email,
+                it.photoUrl.toString(),
+            )
+        }
+    }
+
     fun checkUserIsLogged(): Boolean {
         val currentUser = auth.currentUser
         return currentUser != null

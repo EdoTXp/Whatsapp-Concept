@@ -25,4 +25,6 @@
     <string name="update_profile_photo_content_description">Update profile photo</string>
     <string name="requesting_gallery_permission">You must grant gallery permission to continue.</string>
     <string name="image_not_selected">No images selected</string>
+    <string name="error_uploading_image">Error on upload image</string>
+    <string name="image_uploaded">Success on upload image</string>
 </resources>

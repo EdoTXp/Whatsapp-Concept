@@ -23,4 +23,6 @@
     <string name="update_profile_photo_content_description">Aggiorna la foto del profilo</string>
     <string name="requesting_gallery_permission">Devi concedere il permesso della galleria per continuare.</string>
     <string name="image_not_selected">Nessuna immagine selezionata</string>
+    <string name="error_uploading_image">Errore nel caricamento dell\'immagine</string>
+    <string name="image_uploaded">" 23 / 5.000 Caricamento dell'immagine riuscito"</string>
 </resources>

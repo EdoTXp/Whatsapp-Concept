@@ -12,6 +12,7 @@ import com.deiovannagroup.whatsapp_concept.repositories.AuthRepository
 import com.deiovannagroup.whatsapp_concept.repositories.UserRepository
 import com.deiovannagroup.whatsapp_concept.services.FirebaseAuthService
 import com.deiovannagroup.whatsapp_concept.services.FirebaseFirestoreService
+import com.deiovannagroup.whatsapp_concept.services.FirebaseStorageService
 import com.deiovannagroup.whatsapp_concept.utils.showMessage
 import com.deiovannagroup.whatsapp_concept.viewmodels.SignUpViewModel
 import com.google.android.material.textfield.TextInputLayout
@@ -28,6 +29,7 @@ class SignUpActivity : AppCompatActivity() {
             ),
             UserRepository(
                 FirebaseFirestoreService(),
+                FirebaseStorageService(),
             ),
         )
     }

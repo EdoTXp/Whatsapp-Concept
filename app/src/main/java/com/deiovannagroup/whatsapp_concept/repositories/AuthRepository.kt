@@ -19,6 +19,10 @@ class AuthRepository(
         authService.signOutUser()
     }
 
+    fun getCurrentLoggedUser(): UserModel? {
+        return authService.getCurrentLoggedUser()
+    }
+
     fun checkUserIsLogged() : Boolean {
         return authService.checkUserIsLogged()
     }

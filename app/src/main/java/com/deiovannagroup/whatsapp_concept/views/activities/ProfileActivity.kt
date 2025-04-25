@@ -12,12 +12,30 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.deiovannagroup.whatsapp_concept.R
 import com.deiovannagroup.whatsapp_concept.databinding.ActivityProfileBinding
+import com.deiovannagroup.whatsapp_concept.repositories.AuthRepository
+import com.deiovannagroup.whatsapp_concept.repositories.UserRepository
+import com.deiovannagroup.whatsapp_concept.services.FirebaseAuthService
+import com.deiovannagroup.whatsapp_concept.services.FirebaseFirestoreService
+import com.deiovannagroup.whatsapp_concept.services.FirebaseStorageService
 import com.deiovannagroup.whatsapp_concept.utils.showMessage
+import com.deiovannagroup.whatsapp_concept.viewmodels.ProfileViewModel
 
 class ProfileActivity : AppCompatActivity() {
 
     private val binding by lazy {
         ActivityProfileBinding.inflate(layoutInflater)
+    }
+
+    private val profileViewModel by lazy {
+        ProfileViewModel(
+            AuthRepository(
+                FirebaseAuthService()
+            ),
+            UserRepository(
+                FirebaseFirestoreService(),
+                FirebaseStorageService(),
+            ),
+        )
     }
 
     private var hasCameraPermission = false
@@ -35,6 +53,7 @@ class ProfileActivity : AppCompatActivity() {
     ) { uri ->
         if (uri != null) {
             binding.imageProfile.setImageURI(uri)
+            profileViewModel.uploadImage(uri)
         } else {
             showMessage(getString(R.string.image_not_selected))
         }
@@ -48,6 +67,18 @@ class ProfileActivity : AppCompatActivity() {
         initToolbar()
         requestPermissionsIfNecessary()
         initListeners()
+        addObservers()
+    }
+
+    private fun addObservers() {
+        profileViewModel.uploadResult.observe(this) { result ->
+            result.onSuccess {
+                showMessage(getString(R.string.image_uploaded))
+            }
+            result.onFailure { error ->
+                showMessage("${getString(R.string.error_uploading_image)}: ${error.message}")
+            }
+        }
     }
 
     private fun initListeners() {
@@ -57,6 +88,7 @@ class ProfileActivity : AppCompatActivity() {
             } else {
                 showMessage(getString(R.string.requesting_gallery_permission))
                 requestPermissionsIfNecessary()
+                permissionLauncher.launch(arrayOf(getGalleryPermission()))
             }
         }
     }
