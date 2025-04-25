@@ -7,9 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.deiovannagroup.whatsapp_concept.models.UserModel
 import com.deiovannagroup.whatsapp_concept.repositories.AuthRepository
 import com.deiovannagroup.whatsapp_concept.repositories.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 
-class SignUpViewModel(
+@HiltViewModel
+class SignUpViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository,
 ) : ViewModel() {

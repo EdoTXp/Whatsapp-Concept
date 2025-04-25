@@ -6,25 +6,22 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.deiovannagroup.whatsapp_concept.R
 import com.deiovannagroup.whatsapp_concept.databinding.ActivityLoginBinding
-import com.deiovannagroup.whatsapp_concept.repositories.AuthRepository
-import com.deiovannagroup.whatsapp_concept.services.FirebaseAuthService
 import com.deiovannagroup.whatsapp_concept.utils.showMessage
 import com.deiovannagroup.whatsapp_concept.viewmodels.LoginViewModel
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
 
     private val loginViewModel by lazy {
-        LoginViewModel(
-            AuthRepository(
-                FirebaseAuthService()
-            ),
-        )
+        ViewModelProvider(this)[LoginViewModel::class.java]
     }
 
     private var email = ""

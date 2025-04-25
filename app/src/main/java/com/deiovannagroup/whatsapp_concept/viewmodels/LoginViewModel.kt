@@ -6,9 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.deiovannagroup.whatsapp_concept.models.UserModel
 import com.deiovannagroup.whatsapp_concept.repositories.AuthRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel(
+@HiltViewModel
+class LoginViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
@@ -22,8 +25,6 @@ class LoginViewModel(
         }
     }
 
-    fun checkUserIsLogged() : Boolean {
-        return authRepository.checkUserIsLogged()
-    }
+    fun checkUserIsLogged() = authRepository.checkUserIsLogged()
 
 }

@@ -4,8 +4,9 @@ import android.net.Uri
 import com.deiovannagroup.whatsapp_concept.models.UserModel
 import com.deiovannagroup.whatsapp_concept.services.FirebaseFirestoreService
 import com.deiovannagroup.whatsapp_concept.services.FirebaseStorageService
+import javax.inject.Inject
 
-class UserRepository(
+class UserRepository @Inject constructor(
     private val firestoreService: FirebaseFirestoreService,
     private val storageService: FirebaseStorageService
 ) {

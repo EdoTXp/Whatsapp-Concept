@@ -10,16 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.deiovannagroup.whatsapp_concept.R
 import com.deiovannagroup.whatsapp_concept.databinding.ActivityProfileBinding
-import com.deiovannagroup.whatsapp_concept.repositories.AuthRepository
-import com.deiovannagroup.whatsapp_concept.repositories.UserRepository
-import com.deiovannagroup.whatsapp_concept.services.FirebaseAuthService
-import com.deiovannagroup.whatsapp_concept.services.FirebaseFirestoreService
-import com.deiovannagroup.whatsapp_concept.services.FirebaseStorageService
 import com.deiovannagroup.whatsapp_concept.utils.showMessage
 import com.deiovannagroup.whatsapp_concept.viewmodels.ProfileViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileActivity : AppCompatActivity() {
 
     private val binding by lazy {
@@ -27,15 +25,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private val profileViewModel by lazy {
-        ProfileViewModel(
-            AuthRepository(
-                FirebaseAuthService()
-            ),
-            UserRepository(
-                FirebaseFirestoreService(),
-                FirebaseStorageService(),
-            ),
-        )
+        ViewModelProvider(this)[ProfileViewModel::class.java]
     }
 
     private var hasCameraPermission = false

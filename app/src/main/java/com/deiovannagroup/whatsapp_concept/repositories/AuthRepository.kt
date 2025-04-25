@@ -2,9 +2,10 @@ package com.deiovannagroup.whatsapp_concept.repositories
 
 import com.deiovannagroup.whatsapp_concept.models.UserModel
 import com.deiovannagroup.whatsapp_concept.services.FirebaseAuthService
+import javax.inject.Inject
 
 
-class AuthRepository(
+class AuthRepository @Inject constructor(
     private val authService: FirebaseAuthService
 ) {
     suspend fun signUpUser(email: String, password: String): Result<UserModel> {
@@ -23,7 +24,7 @@ class AuthRepository(
         return authService.getCurrentLoggedUser()
     }
 
-    fun checkUserIsLogged() : Boolean {
+    fun checkUserIsLogged(): Boolean {
         return authService.checkUserIsLogged()
     }
 

@@ -6,32 +6,22 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.deiovannagroup.whatsapp_concept.R
 import com.deiovannagroup.whatsapp_concept.databinding.ActivitySignUpBinding
-import com.deiovannagroup.whatsapp_concept.repositories.AuthRepository
-import com.deiovannagroup.whatsapp_concept.repositories.UserRepository
-import com.deiovannagroup.whatsapp_concept.services.FirebaseAuthService
-import com.deiovannagroup.whatsapp_concept.services.FirebaseFirestoreService
-import com.deiovannagroup.whatsapp_concept.services.FirebaseStorageService
 import com.deiovannagroup.whatsapp_concept.utils.showMessage
 import com.deiovannagroup.whatsapp_concept.viewmodels.SignUpViewModel
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivitySignUpBinding.inflate(layoutInflater)
     }
 
     private val signUpViewModel by lazy {
-        SignUpViewModel(
-            AuthRepository(
-                FirebaseAuthService(),
-            ),
-            UserRepository(
-                FirebaseFirestoreService(),
-                FirebaseStorageService(),
-            ),
-        )
+        ViewModelProvider(this)[SignUpViewModel::class.java]
     }
 
     private lateinit var name: String

@@ -11,25 +11,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.deiovannagroup.whatsapp_concept.R
 import com.deiovannagroup.whatsapp_concept.databinding.ActivityMainBinding
-import com.deiovannagroup.whatsapp_concept.repositories.AuthRepository
-import com.deiovannagroup.whatsapp_concept.services.FirebaseAuthService
+
 import com.deiovannagroup.whatsapp_concept.viewmodels.MainViewModel
 import com.deiovannagroup.whatsapp_concept.views.adapters.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
     private val mainViewModel by lazy {
-        MainViewModel(
-            AuthRepository(
-                FirebaseAuthService()
-            ),
-        )
+        ViewModelProvider(this)[MainViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
