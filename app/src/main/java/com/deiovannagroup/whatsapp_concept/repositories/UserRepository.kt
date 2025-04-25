@@ -14,7 +14,11 @@ class UserRepository @Inject constructor(
         return firestoreService.saveUser(user)
     }
 
-    suspend fun uploadUserImage(imageUri: Uri, userId: String): Result<Unit> {
+    suspend fun uploadUserImage(imageUri: Uri, userId: String): Result<Uri> {
         return storageService.uploadUserImage(imageUri, userId)
+    }
+
+    fun updateProfile(userId: String, data: Map<String, String>): Result<Unit> {
+        return firestoreService.updateProfile(userId, data)
     }
 }

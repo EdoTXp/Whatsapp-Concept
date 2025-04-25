@@ -25,4 +25,6 @@
     <string name="image_not_selected">Nenhuma imagem selecionada</string>
     <string name="error_uploading_image">Erro ao carregar imagem</string>
     <string name="image_uploaded">Sucesso ao carregar imagem</string>
+    <string name="profile_updated">Sucesso no upload do perfil</string>
+    <string name="error_updating_profile">Erro no upload do perfil</string>
 </resources>

@@ -27,4 +27,6 @@
     <string name="image_not_selected">No images selected</string>
     <string name="error_uploading_image">Error on upload image</string>
     <string name="image_uploaded">Success on upload image</string>
+    <string name="profile_updated">Success on upload profile</string>
+    <string name="error_updating_profile">Error on upload profile</string>
 </resources>

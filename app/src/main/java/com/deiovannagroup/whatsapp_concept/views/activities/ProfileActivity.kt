@@ -61,15 +61,30 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun addObservers() {
-        profileViewModel.uploadResult.observe(this) { result ->
-            result.onSuccess {
+        profileViewModel.uploadImageResult.observe(this) { result ->
+            result.onSuccess { uri ->
+                val data = mapOf(
+                    "photo" to uri.toString()
+                )
+                profileViewModel.updateProfile(data)
                 showMessage(getString(R.string.image_uploaded))
             }
             result.onFailure { error ->
                 showMessage("${getString(R.string.error_uploading_image)}: ${error.message}")
             }
         }
+
+        profileViewModel.updateProfileResult.observe(this) { result ->
+            result.onSuccess {
+                showMessage(getString(R.string.profile_updated))
+            }
+
+            result.onFailure { error ->
+                showMessage("${getString(R.string.error_updating_profile)}: ${error.message}")
+            }
+        }
     }
+
 
     private fun initListeners() {
         binding.fabGallerySelector.setOnClickListener {
@@ -79,6 +94,20 @@ class ProfileActivity : AppCompatActivity() {
                 showMessage(getString(R.string.requesting_gallery_permission))
                 requestPermissionsIfNecessary()
                 permissionLauncher.launch(arrayOf(getGalleryPermission()))
+            }
+        }
+
+        binding.btnUpdate.setOnClickListener {
+            val name = binding.editProfileName.text.toString()
+
+            if (name.isNotEmpty()) {
+                val data = mapOf(
+                    "name" to name,
+                )
+
+                profileViewModel.updateProfile(data)
+            } else {
+                showMessage(getString(R.string.empty_name))
             }
         }
     }

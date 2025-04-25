@@ -27,4 +27,21 @@ class FirebaseFirestoreService {
             )
         }
     }
+
+    fun updateProfile(userId: String, data: Map<String, String>): Result<Unit> {
+        try {
+            firestore
+                .collection(COLLECTION_USERS)
+                .document(userId)
+                .update(data)
+
+            return Result.success(Unit)
+        } catch (e: Exception) {
+            return Result.failure(
+                Throwable(
+                    "Error updating profile: ${e.message}",
+                ),
+            )
+        }
+    }
 }

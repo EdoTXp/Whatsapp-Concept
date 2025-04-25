@@ -17,9 +17,11 @@ class ProfileViewModel @Inject constructor(
     private val userRepository: UserRepository,
 ) : ViewModel() {
 
-    private val _uploadResult = MutableLiveData<Result<Unit>>()
-    val uploadResult: LiveData<Result<Unit>> = _uploadResult
+    private val _uploadImageResult = MutableLiveData<Result<Uri>>()
+    val uploadImageResult: LiveData<Result<Uri>> = _uploadImageResult
 
+    private val _updateProfileResult = MutableLiveData<Result<Unit>>()
+    val updateProfileResult: LiveData<Result<Unit>> = _updateProfileResult
 
     fun uploadImage(uri: Uri) {
         viewModelScope.launch {
@@ -28,15 +30,28 @@ class ProfileViewModel @Inject constructor(
             val id = loggedUser?.id
 
             if (id == null) {
-                _uploadResult.value = Result.failure(
+                _uploadImageResult.value = Result.failure(
                     Exception("User not found"),
                 )
             }
 
-            _uploadResult.value = userRepository.uploadUserImage(
+            _uploadImageResult.value = userRepository.uploadUserImage(
                 uri,
                 id!!,
             )
         }
+    }
+
+    fun updateProfile(data: Map<String, String>) {
+        val userId = authRepository.getCurrentLoggedUser()?.id
+
+        if (userId == null) {
+            _updateProfileResult.value = Result.failure(
+                Exception("User not found"),
+            )
+            return
+        }
+
+        _updateProfileResult.value = userRepository.updateProfile(userId, data)
     }
 }

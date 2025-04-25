@@ -13,9 +13,9 @@ class FirebaseStorageService {
         private const val PROFILE_IMAGE = "profile.jpg"
     }
 
-    suspend fun uploadUserImage(uri: Uri, userId: String): Result<Unit> {
+    suspend fun uploadUserImage(uri: Uri, userId: String): Result<Uri> {
         try {
-            storage
+            val result = storage
                 .getReference(LOCATION)
                 .child(USER_PATH)
                 .child(userId)
@@ -23,7 +23,16 @@ class FirebaseStorageService {
                 .putFile(uri)
                 .await()
 
-            return Result.success(Unit)
+            val url = result.metadata
+                ?.reference
+                ?.downloadUrl
+                ?.result
+
+            if (url == null) {
+                return Result.failure(Throwable("Something went wrong"))
+            }
+
+            return Result.success(url)
         } catch (e: Exception) {
             return Result.failure(Throwable(e.message))
         }
