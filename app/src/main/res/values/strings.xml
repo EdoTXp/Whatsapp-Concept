@@ -23,4 +23,6 @@
     <string name="update">Update</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="update_profile_photo_content_description">Update profile photo</string>
+    <string name="requesting_gallery_permission">You must grant gallery permission to continue.</string>
+    <string name="image_not_selected">No images selected</string>
 </resources>

@@ -20,15 +20,26 @@ class ProfileActivity : AppCompatActivity() {
         ActivityProfileBinding.inflate(layoutInflater)
     }
 
+    private var hasCameraPermission = false
+    private var hasGalleryPermission = false
+
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
-        val hasCamera = permissions[Manifest.permission.CAMERA] == true
-        val hasGallery = permissions[getGalleryPermission()] == true
+        hasCameraPermission = permissions[Manifest.permission.CAMERA] == true
+        hasGalleryPermission = permissions[getGalleryPermission()] == true
+    }
 
-        if (!hasCamera || !hasGallery) {
-            showMessage("Permissions not granted")
+    private val galleryLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri ->
+        if (uri != null) {
+            binding.imageProfile.setImageURI(uri)
+        } else {
+            showMessage(getString(R.string.image_not_selected))
         }
+
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +47,18 @@ class ProfileActivity : AppCompatActivity() {
         setEdgeToEdgeLayout()
         initToolbar()
         requestPermissionsIfNecessary()
+        initListeners()
+    }
+
+    private fun initListeners() {
+        binding.fabGallerySelector.setOnClickListener {
+            if (hasGalleryPermission) {
+                galleryLauncher.launch("image/*")
+            } else {
+                showMessage(getString(R.string.requesting_gallery_permission))
+                requestPermissionsIfNecessary()
+            }
+        }
     }
 
     private fun requestPermissionsIfNecessary() {

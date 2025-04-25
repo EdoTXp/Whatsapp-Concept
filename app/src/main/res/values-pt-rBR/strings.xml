@@ -21,4 +21,6 @@
     <string name="update">Atualizar</string>
     <string name="edit_profile">Editar Perfil</string>
     <string name="update_profile_photo_content_description">Atualizar foto do perfil</string>
+    <string name="requesting_gallery_permission">Você deve conceder permissão à galeria para continuar.</string>
+    <string name="image_not_selected">Nenhuma imagem selecionada</string>
 </resources>
