@@ -28,4 +28,6 @@
     <string name="profile_updated">Sucesso no upload do perfil</string>
     <string name="error_updating_profile">Erro no upload do perfil</string>
     <string name="error_getting_profile">Erro no recebimento do perfil</string>
+    <string name="recycler_view_contacts_content_description">Lista de contactos</string>
+    <string name="error_getting_contacts">Erro no recebimento de contactos</string>
 </resources>

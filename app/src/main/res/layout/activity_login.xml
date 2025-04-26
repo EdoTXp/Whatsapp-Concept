@@ -8,7 +8,7 @@
     tools:context=".views.activities.LoginActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/image_contact_photo"
         android:layout_width="150dp"
         android:layout_height="130dp"
         android:layout_marginTop="32dp"
@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        app:layout_constraintTop_toBottomOf="@+id/image_contact_photo">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_login_email"

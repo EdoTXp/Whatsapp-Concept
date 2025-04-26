@@ -30,4 +30,7 @@
     <string name="profile_updated">Success on upload profile</string>
     <string name="error_updating_profile">Error on upload profile</string>
     <string name="error_getting_profile">Error on get profile</string>
+    <string name="user_name_placeholder" translatable="false">User Name</string>
+    <string name="recycler_view_contacts_content_description">List of contacts</string>
+    <string name="error_getting_contacts">Error getting contacts</string>
 </resources>
