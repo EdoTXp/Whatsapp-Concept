@@ -47,9 +47,9 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    override fun onDestroy() {
+    override fun onStop() {
         loginViewModel.loginResult.removeObservers(this)
-        super.onDestroy()
+        super.onStop()
     }
 
     private fun addObservers() {

@@ -9,7 +9,9 @@ import com.deiovannagroup.whatsapp_concept.models.UserModel
 import com.squareup.picasso.Picasso
 import com.deiovannagroup.whatsapp_concept.utils.ContactDiffCallback
 
-class ContactsAdapter : ListAdapter<
+class ContactsAdapter(
+    private val onCLick: (UserModel) -> Unit
+) : ListAdapter<
         UserModel,
         ContactsAdapter.ContactsViewHolder,
         >(
@@ -26,6 +28,8 @@ class ContactsAdapter : ListAdapter<
             Picasso.get()
                 .load(contact.photo)
                 .into(binding.imageContactPhoto)
+
+            binding.clItemContact.setOnClickListener { onCLick(contact) }
         }
 
     }

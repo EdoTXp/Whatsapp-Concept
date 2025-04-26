@@ -66,11 +66,11 @@ class ProfileActivity : AppCompatActivity() {
         profileViewModel.getProfileData()
     }
 
-    override fun onDestroy() {
+    override fun onStop() {
         profileViewModel.uploadImageResult.removeObservers(this)
         profileViewModel.updateProfileResult.removeObservers(this)
         profileViewModel.profileData.removeObservers(this)
-        super.onDestroy()
+        super.onStop()
     }
 
     private fun addObservers() {

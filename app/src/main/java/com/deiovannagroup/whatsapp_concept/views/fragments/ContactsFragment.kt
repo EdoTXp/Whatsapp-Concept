@@ -1,5 +1,6 @@
 package com.deiovannagroup.whatsapp_concept.views.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +12,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.deiovannagroup.whatsapp_concept.R
 import com.deiovannagroup.whatsapp_concept.databinding.FragmentContactsBinding
+import com.deiovannagroup.whatsapp_concept.utils.Constants
 import com.deiovannagroup.whatsapp_concept.viewmodels.ContactsViewModel
+import com.deiovannagroup.whatsapp_concept.views.activities.ChatActivity
 import com.deiovannagroup.whatsapp_concept.views.adapters.ContactsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,7 +38,16 @@ class ContactsFragment : Fragment() {
             false,
         )
 
-        contactsAdapter = ContactsAdapter()
+        contactsAdapter = ContactsAdapter { contact ->
+            val intent = Intent(
+                context,
+                ChatActivity::class.java,
+            )
+
+            intent.putExtra("remitted", contact)
+            intent.putExtra("origin", Constants.CONTACT_ORIGIN)
+            startActivity(intent)
+        }
         binding.rvContacts.adapter = contactsAdapter
 
         binding.rvContacts.layoutManager = LinearLayoutManager(context)

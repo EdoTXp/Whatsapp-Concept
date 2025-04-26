@@ -34,14 +34,12 @@ class SignUpActivity : AppCompatActivity() {
 
         initToolbar()
         initListeners()
-
         addObserver()
     }
-
-    override fun onDestroy() {
+    override fun onStop() {
         signUpViewModel.authResult.removeObservers(this)
         signUpViewModel.userResult.removeObservers(this)
-        super.onDestroy()
+        super.onStop()
     }
 
     private fun addObserver() {
