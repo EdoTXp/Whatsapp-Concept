@@ -27,4 +27,5 @@
     <string name="image_uploaded">Sucesso ao carregar imagem</string>
     <string name="profile_updated">Sucesso no upload do perfil</string>
     <string name="error_updating_profile">Erro no upload do perfil</string>
+    <string name="error_getting_profile">Erro no recebimento do perfil</string>
 </resources>

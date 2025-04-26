@@ -14,6 +14,10 @@ class UserRepository @Inject constructor(
         return firestoreService.saveUser(user)
     }
 
+    suspend fun getProfileData(userId: String): Result<UserModel> {
+        return firestoreService.getProfileData(userId)
+    }
+
     suspend fun uploadUserImage(imageUri: Uri, userId: String): Result<Uri> {
         return storageService.uploadUserImage(imageUri, userId)
     }

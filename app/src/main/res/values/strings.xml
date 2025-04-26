@@ -29,4 +29,5 @@
     <string name="image_uploaded">Success on upload image</string>
     <string name="profile_updated">Success on upload profile</string>
     <string name="error_updating_profile">Error on upload profile</string>
+    <string name="error_getting_profile">Error on get profile</string>
 </resources>

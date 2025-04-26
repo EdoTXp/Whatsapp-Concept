@@ -15,6 +15,7 @@ import com.deiovannagroup.whatsapp_concept.R
 import com.deiovannagroup.whatsapp_concept.databinding.ActivityProfileBinding
 import com.deiovannagroup.whatsapp_concept.utils.showMessage
 import com.deiovannagroup.whatsapp_concept.viewmodels.ProfileViewModel
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -60,6 +61,11 @@ class ProfileActivity : AppCompatActivity() {
         addObservers()
     }
 
+    override fun onStart() {
+        super.onStart()
+        profileViewModel.getProfileData()
+    }
+
     private fun addObservers() {
         profileViewModel.uploadImageResult.observe(this) { result ->
             result.onSuccess { uri ->
@@ -69,6 +75,7 @@ class ProfileActivity : AppCompatActivity() {
                 profileViewModel.updateProfile(data)
                 showMessage(getString(R.string.image_uploaded))
             }
+
             result.onFailure { error ->
                 showMessage("${getString(R.string.error_uploading_image)}: ${error.message}")
             }
@@ -81,6 +88,26 @@ class ProfileActivity : AppCompatActivity() {
 
             result.onFailure { error ->
                 showMessage("${getString(R.string.error_updating_profile)}: ${error.message}")
+            }
+        }
+
+        profileViewModel.profileData.observe(this) { result ->
+            result.onSuccess { profile ->
+
+                binding.editProfileName.setText(profile.name)
+
+                if (profile.photo == null) {
+                    binding.imageProfile.setImageResource(R.drawable.profile)
+                } else {
+                    Picasso
+                        .get()
+                        .load(profile.photo)
+                        .into(binding.imageProfile)
+                }
+            }
+
+            result.onFailure { error ->
+                showMessage("${getString(R.string.error_getting_profile)}: ${error.message}")
             }
         }
     }

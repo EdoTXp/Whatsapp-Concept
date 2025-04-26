@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.deiovannagroup.whatsapp_concept.models.UserModel
 import com.deiovannagroup.whatsapp_concept.repositories.AuthRepository
 import com.deiovannagroup.whatsapp_concept.repositories.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +24,9 @@ class ProfileViewModel @Inject constructor(
     private val _updateProfileResult = MutableLiveData<Result<Unit>>()
     val updateProfileResult: LiveData<Result<Unit>> = _updateProfileResult
 
+    private val _profileData = MutableLiveData<Result<UserModel>>()
+    val profileData: LiveData<Result<UserModel>> = _profileData
+
     fun uploadImage(uri: Uri) {
         viewModelScope.launch {
             val loggedUser = authRepository.getCurrentLoggedUser()
@@ -39,6 +43,21 @@ class ProfileViewModel @Inject constructor(
                 uri,
                 id!!,
             )
+        }
+    }
+
+    fun getProfileData() {
+        viewModelScope.launch {
+            val userId = authRepository.getCurrentLoggedUser()?.id
+
+            if (userId == null) {
+                _profileData.value = Result.failure(
+                    Exception("User not found"),
+                )
+                return@launch
+            }
+
+            _profileData.value = userRepository.getProfileData(userId)
         }
     }
 

@@ -25,6 +25,7 @@
     <string name="image_not_selected">Nessuna immagine selezionata</string>
     <string name="error_uploading_image">Errore nel caricamento dell\'immagine</string>
     <string name="image_uploaded">" 23 / 5.000 Caricamento dell'immagine riuscito"</string>
-    <string name="profile_updated">Caricamento del profilo riuscito con successo</string>
-    <string name="error_updating_profile">Errore nel caricamento del profilo</string>
+    <string name="profile_updated">Aggiornamento del profilo riuscito</string>
+    <string name="error_updating_profile">Errore nel aggiornamento del profilo</string>
+    <string name="error_getting_profile">Errore nella ricezione del profilo</string>
 </resources>
