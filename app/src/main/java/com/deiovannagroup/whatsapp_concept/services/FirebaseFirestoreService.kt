@@ -2,6 +2,9 @@ package com.deiovannagroup.whatsapp_concept.services
 
 import com.deiovannagroup.whatsapp_concept.models.UserModel
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
 class FirebaseFirestoreService {
@@ -62,6 +65,38 @@ class FirebaseFirestoreService {
                     "Error getting profile data: ${e.message}",
                 ),
             )
+        }
+    }
+
+    fun getContacts(userId: String): Flow<Result<List<UserModel>>> = callbackFlow {
+        val listenerRegistration = firestore
+            .collection(COLLECTION_USERS)
+            .addSnapshotListener { querySnapshot, error ->
+                if (error != null) {
+                    trySend(Result.failure(Throwable("Error getting contacts: ${error.message}")))
+                    return@addSnapshotListener
+                }
+
+                val users = mutableListOf<UserModel>()
+                val documents = querySnapshot?.documents
+
+                documents?.forEach { documentSnapshot ->
+                    val user = documentSnapshot.toObject(UserModel::class.java)
+                    if (user == null) {
+                        return@forEach
+                    }
+                    if (user.id == userId) {
+                        return@forEach
+                    }
+
+                    users.add(user)
+                }
+
+                trySend(Result.success(users))
+            }
+
+        awaitClose {
+            listenerRegistration.remove()
         }
     }
 

@@ -66,6 +66,13 @@ class ProfileActivity : AppCompatActivity() {
         profileViewModel.getProfileData()
     }
 
+    override fun onDestroy() {
+        profileViewModel.uploadImageResult.removeObservers(this)
+        profileViewModel.updateProfileResult.removeObservers(this)
+        profileViewModel.profileData.removeObservers(this)
+        super.onDestroy()
+    }
+
     private fun addObservers() {
         profileViewModel.uploadImageResult.observe(this) { result ->
             result.onSuccess { uri ->
@@ -96,9 +103,7 @@ class ProfileActivity : AppCompatActivity() {
 
                 binding.editProfileName.setText(profile.name)
 
-                if (profile.photo == null) {
-                    binding.imageProfile.setImageResource(R.drawable.profile)
-                } else {
+                if (profile.photo.isNotEmpty()) {
                     Picasso
                         .get()
                         .load(profile.photo)

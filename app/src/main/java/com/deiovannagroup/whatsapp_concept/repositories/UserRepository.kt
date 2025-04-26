@@ -4,6 +4,7 @@ import android.net.Uri
 import com.deiovannagroup.whatsapp_concept.models.UserModel
 import com.deiovannagroup.whatsapp_concept.services.FirebaseFirestoreService
 import com.deiovannagroup.whatsapp_concept.services.FirebaseStorageService
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
@@ -22,7 +23,13 @@ class UserRepository @Inject constructor(
         return storageService.uploadUserImage(imageUri, userId)
     }
 
+    fun getContacts(userId: String): Flow<Result<List<UserModel>>> {
+        return firestoreService.getContacts(userId)
+    }
+
     fun updateProfile(userId: String, data: Map<String, String>): Result<Unit> {
         return firestoreService.updateProfile(userId, data)
     }
+
+
 }

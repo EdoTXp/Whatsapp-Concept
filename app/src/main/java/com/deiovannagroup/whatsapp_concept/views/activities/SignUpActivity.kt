@@ -38,6 +38,12 @@ class SignUpActivity : AppCompatActivity() {
         addObserver()
     }
 
+    override fun onDestroy() {
+        signUpViewModel.authResult.removeObservers(this)
+        signUpViewModel.userResult.removeObservers(this)
+        super.onDestroy()
+    }
+
     private fun addObserver() {
         signUpViewModel.authResult.observe(this) { result ->
             result.onSuccess { user ->

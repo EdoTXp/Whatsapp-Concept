@@ -28,8 +28,8 @@ class FirebaseAuthService {
             return Result.success(
                 UserModel(
                     user.uid,
-                    user.displayName,
-                    user.email,
+                    user.displayName ?: "",
+                    user.email ?: "",
                     user.photoUrl.toString(),
                 ),
             )
@@ -62,8 +62,8 @@ class FirebaseAuthService {
             return Result.success(
                 UserModel(
                     user.uid,
-                    user.displayName,
-                    user.email,
+                    user.displayName ?: "",
+                    user.email ?: "",
                     user.photoUrl.toString(),
                 ),
             )
@@ -84,8 +84,8 @@ class FirebaseAuthService {
         return auth.currentUser?.let {
             UserModel(
                 it.uid,
-                it.displayName,
-                it.email,
+                it.displayName ?: "",
+                it.email ?: "",
                 it.photoUrl.toString(),
             )
         }

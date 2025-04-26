@@ -36,7 +36,6 @@ class SignUpViewModel @Inject constructor(
                 id,
                 name,
                 email,
-                null,
             )
             _userResult.value = userRepository.saveUser(user)
         }
