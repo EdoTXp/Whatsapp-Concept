@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.deiovannagroup.whatsapp_concept.databinding.ActivityChatBinding
 import com.deiovannagroup.whatsapp_concept.models.UserModel
 import com.deiovannagroup.whatsapp_concept.utils.Constants
+import com.squareup.picasso.Picasso
 
 class ChatActivity : AppCompatActivity() {
 
@@ -22,6 +23,26 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setEdgeToEdgeLayout()
         getUserDataRemitted()
+        initToolbar()
+    }
+
+    private fun initToolbar() {
+        val toolbar = binding.tbChat
+        setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            title = ""
+
+            if (dataRemitted == null)
+                return
+
+            binding.textName.text = dataRemitted!!.name
+            Picasso.get()
+                .load(dataRemitted!!.photo)
+                .into(binding.imagePhotoProfile)
+
+
+            setDisplayHomeAsUpEnabled(true)
+        }
     }
 
     private fun getUserDataRemitted() {

@@ -33,4 +33,7 @@
     <string name="user_name_placeholder" translatable="false">User Name</string>
     <string name="recycler_view_contacts_content_description">List of contacts</string>
     <string name="error_getting_contacts">Error getting contacts</string>
+    <string name="send_message_fab_content_description">Send message</string>
+    <string name="list_of_messages_recycler_view_content_description">List of messages</string>
+    <string name="enter_your_message_hint">Enter your message</string>
 </resources>
