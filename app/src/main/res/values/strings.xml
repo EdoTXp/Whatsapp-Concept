@@ -38,4 +38,5 @@
     <string name="enter_your_message_hint">Enter your message</string>
     <string name="error_send_message">Error on send message</string>
     <string name="error_get_chats">Error on get chats</string>
+    <string name="chat_message_place_holder" translatable="false">Mussum Ipsum, cacilds vidis litro abertis. Posuere libero varius. Nullam a nisl ut ante blandit hendrerit.</string>
 </resources>
