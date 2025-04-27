@@ -12,7 +12,6 @@ import com.deiovannagroup.whatsapp_concept.R
 import com.deiovannagroup.whatsapp_concept.viewmodels.MessagesViewModel
 import com.deiovannagroup.whatsapp_concept.databinding.ActivityMessagesBinding
 import com.deiovannagroup.whatsapp_concept.models.UserModel
-import com.deiovannagroup.whatsapp_concept.utils.Constants
 import com.deiovannagroup.whatsapp_concept.utils.showMessage
 import com.deiovannagroup.whatsapp_concept.views.adapters.MessageAdapter
 import com.squareup.picasso.Picasso
@@ -144,23 +143,15 @@ class MessagesActivity : AppCompatActivity() {
 
         if (extras == null)
             return
-
-        val origin = extras.getString("origin")
-
-        if (origin == Constants.CONTACT_ORIGIN) {
-            dataUserReceived = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                extras.getParcelable(
-                    "remitted",
-                    UserModel::class.java,
-                )
-            } else {
-                @Suppress("DEPRECATION")
-                extras.getParcelable("remitted")
-            }
-        } else if (origin == Constants.CHAT_ORIGIN) {
-
+        dataUserReceived = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            extras.getParcelable(
+                "remitted",
+                UserModel::class.java,
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            extras.getParcelable("remitted")
         }
-
     }
 
     private fun setEdgeToEdgeLayout() {

@@ -152,7 +152,7 @@ class FirebaseFirestoreService {
     }
 
     suspend fun sendMessage(
-        chat: MessageModel,
+        message: MessageModel,
         idUserRemitted: String,
         idUserReceived: String,
     ): Result<Unit> {
@@ -161,7 +161,7 @@ class FirebaseFirestoreService {
                 .collection(COLLECTION_MESSAGES)
                 .document(idUserRemitted)
                 .collection(idUserReceived)
-                .add(chat)
+                .add(message)
                 .await()
 
 

@@ -87,7 +87,7 @@ class MessagesViewModel @Inject constructor(
             )
 
             // Send message for remitter
-            _sendMessageResult.value = messageRepository.sendMessage(
+            messageRepository.sendMessage(
                 message,
                 idUserRemitted,
                 idUserReceived,
@@ -119,18 +119,18 @@ class MessagesViewModel @Inject constructor(
             val chatRemitter = ChatModel(
                 idUserRemitted,
                 idUserReceived,
-                getLoggedUser()?.photo ?: "",
+                photo,
                 name,
                 message,
             )
-            _sendChatResult.value = chatsRepository.sendChat(chatRemitter)
+            chatsRepository.sendChat(chatRemitter)
 
             // Send chat for received
             val chatReceived = ChatModel(
                 idUserReceived,
                 idUserRemitted,
-                photo,
-                name,
+                getLoggedUser()?.photo ?: "",
+                getLoggedUser()?.name ?: "",
                 message,
             )
             _sendChatResult.value = chatsRepository.sendChat(chatReceived)

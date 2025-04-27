@@ -36,4 +36,5 @@
     <string name="error_send_message">Errore nel inviare il messaggio</string>
     <string name="error_get_messages">Errore nella ricezione dei messaggi</string>
     <string name="error_get_chat">Errore nella ricezione la chat</string>
+    <string name="list_of_chats_content_description">Lista di chats</string>
 </resources>

@@ -40,4 +40,6 @@
     <string name="error_get_messages">Error on get messages</string>
     <string name="chat_message_place_holder" translatable="false">Mussum Ipsum, cacilds vidis litro abertis. Posuere libero varius. Nullam a nisl ut ante blandit hendrerit.</string>
     <string name="error_get_chat">Error on get chat</string>
+    <string name="last_message_place_holder" translatable="false">Last Message</string>
+    <string name="list_of_chats_content_description">List of chats</string>
 </resources>
