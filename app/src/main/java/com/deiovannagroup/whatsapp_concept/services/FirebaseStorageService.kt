@@ -1,17 +1,14 @@
 package com.deiovannagroup.whatsapp_concept.services
 
 import android.net.Uri
+import com.deiovannagroup.whatsapp_concept.utils.Constants.LOCATION
+import com.deiovannagroup.whatsapp_concept.utils.Constants.PROFILE_IMAGE
+import com.deiovannagroup.whatsapp_concept.utils.Constants.USER_PATH
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 
 class FirebaseStorageService {
     private val storage = FirebaseStorage.getInstance()
-
-    companion object {
-        private const val LOCATION = "photos"
-        private const val USER_PATH = "users"
-        private const val PROFILE_IMAGE = "profile.jpg"
-    }
 
     suspend fun uploadUserImage(uri: Uri, userId: String): Result<Uri> {
         try {

@@ -1,6 +1,9 @@
 package com.deiovannagroup.whatsapp_concept.services
 
+import com.deiovannagroup.whatsapp_concept.models.ChatModel
 import com.deiovannagroup.whatsapp_concept.models.UserModel
+import com.deiovannagroup.whatsapp_concept.utils.Constants.COLLECTION_CHATS
+import com.deiovannagroup.whatsapp_concept.utils.Constants.COLLECTION_USERS
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -10,9 +13,6 @@ import kotlinx.coroutines.tasks.await
 class FirebaseFirestoreService {
     private val firestore = FirebaseFirestore.getInstance()
 
-    companion object {
-        private const val COLLECTION_USERS = "users"
-    }
 
     suspend fun saveUser(user: UserModel): Result<Unit> {
         try {
@@ -112,6 +112,31 @@ class FirebaseFirestoreService {
             return Result.failure(
                 Throwable(
                     "Error updating profile: ${e.message}",
+                ),
+            )
+        }
+    }
+
+    suspend fun sendMessage(
+        chat: ChatModel,
+        idUserRemitted: String,
+        idUserReceived: String,
+    ): Result<Unit> {
+        try {
+            firestore
+                .collection(COLLECTION_CHATS)
+                .document(idUserRemitted)
+                .collection(idUserReceived)
+                .add(chat)
+                .await()
+
+
+
+            return Result.success(Unit)
+        } catch (e: Exception) {
+            return Result.failure(
+                Throwable(
+                    "Error sending message: ${e.message}",
                 ),
             )
         }

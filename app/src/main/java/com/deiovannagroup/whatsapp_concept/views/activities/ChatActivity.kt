@@ -6,15 +6,25 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
+import com.deiovannagroup.whatsapp_concept.R
+import com.deiovannagroup.whatsapp_concept.viewmodels.ChatViewModel
 import com.deiovannagroup.whatsapp_concept.databinding.ActivityChatBinding
 import com.deiovannagroup.whatsapp_concept.models.UserModel
 import com.deiovannagroup.whatsapp_concept.utils.Constants
+import com.deiovannagroup.whatsapp_concept.utils.showMessage
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChatActivity : AppCompatActivity() {
 
     private val binding by lazy {
         ActivityChatBinding.inflate(layoutInflater)
+    }
+
+    private val chatViewModel by lazy {
+        ViewModelProvider(this)[ChatViewModel::class.java]
     }
 
     private var dataRemitted: UserModel? = null
@@ -24,6 +34,40 @@ class ChatActivity : AppCompatActivity() {
         setEdgeToEdgeLayout()
         getUserDataRemitted()
         initToolbar()
+        initListeners()
+        addObservers()
+    }
+
+    override fun onStop() {
+        chatViewModel.chatResult.removeObservers(this)
+        super.onStop()
+    }
+
+    private fun addObservers() {
+        chatViewModel.chatResult.observe(this) { result ->
+            result.onFailure { error ->
+                showMessage(
+                    "${getString(R.string.error_send_message)}:" +
+                            " ${error.message}"
+                )
+
+            }
+        }
+    }
+
+    private fun initListeners() {
+        binding.fabSendChat.setOnClickListener {
+            val message = binding.editChats.text.toString()
+
+            if (message.isNotEmpty()) {
+                chatViewModel.sendMessage(
+                    message,
+                    dataRemitted!!.id,
+                )
+
+                binding.editChats.text?.clear()
+            }
+        }
     }
 
     private fun initToolbar() {
