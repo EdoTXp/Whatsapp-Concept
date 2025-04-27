@@ -8,6 +8,7 @@ import com.deiovannagroup.whatsapp_concept.models.ChatModel
 import com.deiovannagroup.whatsapp_concept.repositories.AuthRepository
 import com.deiovannagroup.whatsapp_concept.repositories.ChatRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,15 +18,40 @@ class ChatViewModel @Inject constructor(
     private val chatRepository: ChatRepository,
 ) : ViewModel() {
 
-    private val _chatResult = MutableLiveData<Result<Unit>>()
-    val chatResult: LiveData<Result<Unit>> = _chatResult
+    private val _messageResult = MutableLiveData<Result<Unit>>()
+    val messageResult: LiveData<Result<Unit>> = _messageResult
 
-    fun sendMessage(chat: String, idRemitted: String?) {
+    private val _chatsResult = MutableLiveData<Result<List<ChatModel>>>()
+    val chatsResult: LiveData<Result<List<ChatModel>>> = _chatsResult
+    private var getChatsJob: Job? = null
+
+    fun clearObserver() {
+        getChatsJob?.cancel()
+    }
+
+    fun getChats(idUserReceived: String?) {
+        getChatsJob = viewModelScope.launch {
+            val idUserRemitted = authRepository.getCurrentLoggedUser()?.id
+            if (idUserRemitted == null || idUserReceived == null) {
+                _messageResult.value = Result.failure(Exception("User not found"))
+                return@launch
+            }
+
+            chatRepository.getChats(
+                idUserRemitted,
+                idUserReceived,
+            ).collect { result ->
+                _chatsResult.value = result
+            }
+        }
+    }
+
+    fun sendMessage(chat: String, idUserReceived: String?) {
         viewModelScope.launch {
             val idUserRemitted = authRepository.getCurrentLoggedUser()?.id
 
-            if (idUserRemitted == null || idRemitted == null) {
-                _chatResult.value = Result.failure(Exception("User not found"))
+            if (idUserRemitted == null || idUserReceived == null) {
+                _messageResult.value = Result.failure(Exception("User not found"))
                 return@launch
             }
 
@@ -34,15 +60,17 @@ class ChatViewModel @Inject constructor(
                 chat,
             )
 
-            _chatResult.value = chatRepository.sendMessage(
+            // Send message for remitter
+            _messageResult.value = chatRepository.sendMessage(
                 chat,
                 idUserRemitted,
-                idRemitted,
+                idUserReceived,
             )
 
-            _chatResult.value = chatRepository.sendMessage(
+            // Send message for received
+            _messageResult.value = chatRepository.sendMessage(
                 chat,
-                idRemitted,
+                idUserReceived,
                 idUserRemitted,
             )
         }

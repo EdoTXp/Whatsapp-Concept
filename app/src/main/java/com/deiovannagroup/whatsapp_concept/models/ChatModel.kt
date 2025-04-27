@@ -7,5 +7,5 @@ data class ChatModel(
     val idUser: String = "",
     val message: String = "",
     @ServerTimestamp
-    val data: Date? = null,
+    val date: Date? = null,
 )

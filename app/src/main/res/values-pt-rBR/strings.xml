@@ -34,4 +34,5 @@
     <string name="list_of_messages_recycler_view_content_description">Lista de mensagens</string>
     <string name="enter_your_message_hint">Digite sua mensagem</string>
     <string name="error_send_message">Erro no enviar a messagem</string>
+    <string name="error_get_chats">Erro no recebimento das messagens</string>
 </resources>

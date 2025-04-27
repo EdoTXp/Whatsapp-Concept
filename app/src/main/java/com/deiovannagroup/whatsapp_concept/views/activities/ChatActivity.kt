@@ -2,6 +2,7 @@ package com.deiovannagroup.whatsapp_concept.views.activities
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -36,15 +37,35 @@ class ChatActivity : AppCompatActivity() {
         initToolbar()
         initListeners()
         addObservers()
+        chatViewModel.getChats(dataRemitted!!.id)
     }
 
     override fun onStop() {
-        chatViewModel.chatResult.removeObservers(this)
+        chatViewModel.clearObserver()
+        chatViewModel.chatsResult.removeObservers(this)
+        chatViewModel.messageResult.removeObservers(this)
         super.onStop()
     }
 
     private fun addObservers() {
-        chatViewModel.chatResult.observe(this) { result ->
+        chatViewModel.chatsResult.observe(this) { result ->
+            result.onSuccess { chats ->
+                if (chats.isNotEmpty()) {
+                    chats.forEach { chat ->
+                        Log.i("chat_result", "User: ${chat.idUser}, Message: ${chat.message}")
+                    }
+                }
+
+            }
+            result.onFailure { error ->
+                showMessage(
+                    "${getString(R.string.error_get_chats)}:" +
+                            " ${error.message}"
+                )
+            }
+        }
+
+        chatViewModel.messageResult.observe(this) { result ->
             result.onFailure { error ->
                 showMessage(
                     "${getString(R.string.error_send_message)}:" +

@@ -5,6 +5,7 @@ import com.deiovannagroup.whatsapp_concept.models.UserModel
 import com.deiovannagroup.whatsapp_concept.utils.Constants.COLLECTION_CHATS
 import com.deiovannagroup.whatsapp_concept.utils.Constants.COLLECTION_USERS
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -141,4 +142,40 @@ class FirebaseFirestoreService {
             )
         }
     }
+
+    fun getChats(idUserRemitted: String, idUserReceived: String): Flow<Result<List<ChatModel>>> =
+        callbackFlow {
+            val listenerRegistration =
+                firestore
+                    .collection(COLLECTION_CHATS)
+                    .document(idUserRemitted)
+                    .collection(idUserReceived)
+                    .orderBy("date", Query.Direction.ASCENDING)
+                    .addSnapshotListener { querySnapshot, error ->
+
+                        if (error != null) {
+                            trySend(
+                                Result.failure(
+                                    Throwable("Error getting chats: ${error.message}")
+                                ),
+                            )
+                            return@addSnapshotListener
+                        }
+
+                        val chats = mutableListOf<ChatModel>()
+                        val documents = querySnapshot?.documents
+
+                        documents?.forEach { documentSnapshot ->
+                            val chat = documentSnapshot.toObject(ChatModel::class.java)
+                            if (chat == null) {
+                                return@forEach
+                            }
+                            chats.add(chat)
+                        }
+                        trySend(Result.success(chats))
+                    }
+            awaitClose {
+                listenerRegistration.remove()
+            }
+        }
 }
