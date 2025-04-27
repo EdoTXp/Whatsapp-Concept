@@ -1,7 +1,7 @@
 package com.deiovannagroup.whatsapp_concept.di
 
 import com.deiovannagroup.whatsapp_concept.repositories.AuthRepository
-import com.deiovannagroup.whatsapp_concept.repositories.ChatRepository
+import com.deiovannagroup.whatsapp_concept.repositories.MessageRepository
 import com.deiovannagroup.whatsapp_concept.repositories.UserRepository
 import com.deiovannagroup.whatsapp_concept.services.FirebaseAuthService
 import com.deiovannagroup.whatsapp_concept.services.FirebaseFirestoreService
@@ -42,7 +42,7 @@ object FirebaseModule {
 
     @Provides
     @Singleton
-    fun provideChatRepository() = ChatRepository(provideFirebaseFirestore())
+    fun provideChatRepository() = MessageRepository(provideFirebaseFirestore())
 
 
 }

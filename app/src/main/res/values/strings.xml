@@ -37,6 +37,7 @@
     <string name="list_of_messages_recycler_view_content_description">List of messages</string>
     <string name="enter_your_message_hint">Enter your message</string>
     <string name="error_send_message">Error on send message</string>
-    <string name="error_get_chats">Error on get chats</string>
+    <string name="error_get_messages">Error on get messages</string>
     <string name="chat_message_place_holder" translatable="false">Mussum Ipsum, cacilds vidis litro abertis. Posuere libero varius. Nullam a nisl ut ante blandit hendrerit.</string>
+    <string name="error_get_chat">Error on get chat</string>
 </resources>

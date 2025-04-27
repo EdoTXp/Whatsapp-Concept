@@ -4,53 +4,53 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.deiovannagroup.whatsapp_concept.databinding.ItemChatReceivedBinding
-import com.deiovannagroup.whatsapp_concept.databinding.ItemChatRemittedBinding
-import com.deiovannagroup.whatsapp_concept.models.ChatModel
-import com.deiovannagroup.whatsapp_concept.utils.ChatDiffUtilCallback
+import com.deiovannagroup.whatsapp_concept.databinding.ItemMessageReceivedBinding
+import com.deiovannagroup.whatsapp_concept.databinding.ItemMessageRemittedBinding
+import com.deiovannagroup.whatsapp_concept.models.MessageModel
+import com.deiovannagroup.whatsapp_concept.utils.MessageDiffUtilCallback
 import com.deiovannagroup.whatsapp_concept.utils.Constants
 
 
-class ChatAdapter(private val userId: String) :
-    ListAdapter<ChatModel, ViewHolder>(ChatDiffUtilCallback) {
+class MessageAdapter(private val userId: String) :
+    ListAdapter<MessageModel, ViewHolder>(MessageDiffUtilCallback) {
 
-    class ChatRemittedViewHolder(private val binding: ItemChatRemittedBinding) :
+    class MessageRemittedViewHolder(private val binding: ItemMessageRemittedBinding) :
         ViewHolder(binding.root) {
 
-        fun bind(message: ChatModel) {
-            binding.textChatRemitted.text = message.message
+        fun bind(message: MessageModel) {
+            binding.textMessageRemitted.text = message.message
         }
 
         companion object {
-            fun inflate(parent: ViewGroup): ChatRemittedViewHolder {
+            fun inflate(parent: ViewGroup): MessageRemittedViewHolder {
                 val inflater = LayoutInflater.from(parent.context)
-                val itemView = ItemChatRemittedBinding.inflate(
+                val itemView = ItemMessageRemittedBinding.inflate(
                     inflater,
                     parent,
                     false,
                 )
 
-                return ChatRemittedViewHolder(itemView)
+                return MessageRemittedViewHolder(itemView)
             }
         }
     }
 
-    class ChatReceivedViewHolder(private val binding: ItemChatReceivedBinding) :
+    class MessageReceivedViewHolder(private val binding: ItemMessageReceivedBinding) :
         ViewHolder(binding.root) {
 
-        fun bind(message: ChatModel) {
-            binding.textChatReceived.text = message.message
+        fun bind(message: MessageModel) {
+            binding.textMessageReceived.text = message.message
         }
 
         companion object {
-            fun inflate(parent: ViewGroup): ChatReceivedViewHolder {
+            fun inflate(parent: ViewGroup): MessageReceivedViewHolder {
                 val inflater = LayoutInflater.from(parent.context)
-                val itemView = ItemChatReceivedBinding.inflate(
+                val itemView = ItemMessageReceivedBinding.inflate(
                     inflater,
                     parent,
                     false,
                 )
-                return ChatReceivedViewHolder(itemView)
+                return MessageReceivedViewHolder(itemView)
             }
         }
     }
@@ -70,10 +70,10 @@ class ChatAdapter(private val userId: String) :
         viewType: Int,
     ): ViewHolder {
         if (viewType == Constants.REMITTER_TYPE) {
-            return ChatRemittedViewHolder.inflate(parent)
+            return MessageRemittedViewHolder.inflate(parent)
         }
 
-        return ChatReceivedViewHolder.inflate(parent)
+        return MessageReceivedViewHolder.inflate(parent)
 
     }
 
@@ -84,8 +84,8 @@ class ChatAdapter(private val userId: String) :
     ) {
         val message = getItem(position)
         when (holder) {
-            is ChatRemittedViewHolder -> holder.bind(message)
-            is ChatReceivedViewHolder -> holder.bind(message)
+            is MessageRemittedViewHolder -> holder.bind(message)
+            is MessageReceivedViewHolder -> holder.bind(message)
         }
     }
 

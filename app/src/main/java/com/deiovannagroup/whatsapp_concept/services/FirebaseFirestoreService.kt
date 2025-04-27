@@ -1,8 +1,11 @@
 package com.deiovannagroup.whatsapp_concept.services
 
 import com.deiovannagroup.whatsapp_concept.models.ChatModel
+import com.deiovannagroup.whatsapp_concept.models.MessageModel
 import com.deiovannagroup.whatsapp_concept.models.UserModel
 import com.deiovannagroup.whatsapp_concept.utils.Constants.COLLECTION_CHATS
+import com.deiovannagroup.whatsapp_concept.utils.Constants.COLLECTION_LAST_CHATS
+import com.deiovannagroup.whatsapp_concept.utils.Constants.COLLECTION_MESSAGES
 import com.deiovannagroup.whatsapp_concept.utils.Constants.COLLECTION_USERS
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -119,13 +122,13 @@ class FirebaseFirestoreService {
     }
 
     suspend fun sendMessage(
-        chat: ChatModel,
+        chat: MessageModel,
         idUserRemitted: String,
         idUserReceived: String,
     ): Result<Unit> {
         try {
             firestore
-                .collection(COLLECTION_CHATS)
+                .collection(COLLECTION_MESSAGES)
                 .document(idUserRemitted)
                 .collection(idUserReceived)
                 .add(chat)
@@ -143,11 +146,34 @@ class FirebaseFirestoreService {
         }
     }
 
-    fun getChats(idUserRemitted: String, idUserReceived: String): Flow<Result<List<ChatModel>>> =
+    suspend fun sendChat(chat: ChatModel): Result<Unit> {
+        try {
+            firestore
+                .collection(COLLECTION_CHATS)
+                .document(chat.userIdRemitted)
+                .collection(COLLECTION_LAST_CHATS)
+                .document(chat.userIdReceived)
+                .set(chat)
+                .await()
+
+            return Result.success(Unit)
+        } catch (e: Exception) {
+            return Result.failure(
+                Throwable(
+                    "Error sending chat: ${e.message}",
+                ),
+            )
+        }
+    }
+
+    fun getMessages(
+        idUserRemitted: String,
+        idUserReceived: String
+    ): Flow<Result<List<MessageModel>>> =
         callbackFlow {
             val listenerRegistration =
                 firestore
-                    .collection(COLLECTION_CHATS)
+                    .collection(COLLECTION_MESSAGES)
                     .document(idUserRemitted)
                     .collection(idUserReceived)
                     .orderBy("date", Query.Direction.ASCENDING)
@@ -162,11 +188,11 @@ class FirebaseFirestoreService {
                             return@addSnapshotListener
                         }
 
-                        val chats = mutableListOf<ChatModel>()
+                        val chats = mutableListOf<MessageModel>()
                         val documents = querySnapshot?.documents
 
                         documents?.forEach { documentSnapshot ->
-                            val chat = documentSnapshot.toObject(ChatModel::class.java)
+                            val chat = documentSnapshot.toObject(MessageModel::class.java)
                             if (chat == null) {
                                 return@forEach
                             }

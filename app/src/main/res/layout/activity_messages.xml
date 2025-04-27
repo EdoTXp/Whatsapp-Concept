@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/chat_background"
-    tools:context=".views.activities.ChatActivity">
+    tools:context=".views.activities.MessagesActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/tb_chat"
+        android:id="@+id/tb_messages"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -26,9 +26,9 @@
         android:layout_height="40dp"
         android:layout_marginStart="50dp"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/tb_chat"
-        app:layout_constraintStart_toStartOf="@+id/tb_chat"
-        app:layout_constraintTop_toTopOf="@+id/tb_chat"
+        app:layout_constraintBottom_toBottomOf="@+id/tb_messages"
+        app:layout_constraintStart_toStartOf="@+id/tb_messages"
+        app:layout_constraintTop_toTopOf="@+id/tb_messages"
         app:shapeAppearanceOverlay="@style/CircularImageShape"
         app:srcCompat="@drawable/profile" />
 
@@ -45,7 +45,7 @@
         app:layout_constraintTop_toTopOf="@+id/image_photo_profile" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_chats"
+        android:id="@+id/rv_messages"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -55,8 +55,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tb_chat"
-        tools:listitem="@layout/item_chat_received" />
+        app:layout_constraintTop_toBottomOf="@+id/tb_messages"
+        tools:listitem="@layout/item_message_received" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
@@ -67,18 +67,18 @@
         android:layout_marginBottom="8dp"
         app:boxBackgroundColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/fab_send_chat"
+        app:layout_constraintEnd_toStartOf="@+id/fab_send_message"
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_chats"
+            android:id="@+id/edit_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enter_your_message_hint" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_send_chat"
+        android:id="@+id/fab_send_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"

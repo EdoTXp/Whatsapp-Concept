@@ -4,8 +4,11 @@ import com.google.firebase.firestore.ServerTimestamp
 import java.util.Date
 
 data class ChatModel(
-    val idUser: String = "",
-    val message: String = "",
+    val userIdRemitted: String = "",
+    val userIdReceived: String = "",
+    val photo: String = "",
+    val name: String = "",
+    val lastMessage: String = "",
     @ServerTimestamp
     val date: Date? = null,
 )

@@ -9,74 +9,84 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.deiovannagroup.whatsapp_concept.R
-import com.deiovannagroup.whatsapp_concept.viewmodels.ChatViewModel
-import com.deiovannagroup.whatsapp_concept.databinding.ActivityChatBinding
+import com.deiovannagroup.whatsapp_concept.viewmodels.MessagesViewModel
+import com.deiovannagroup.whatsapp_concept.databinding.ActivityMessagesBinding
 import com.deiovannagroup.whatsapp_concept.models.UserModel
 import com.deiovannagroup.whatsapp_concept.utils.Constants
 import com.deiovannagroup.whatsapp_concept.utils.showMessage
-import com.deiovannagroup.whatsapp_concept.views.adapters.ChatAdapter
+import com.deiovannagroup.whatsapp_concept.views.adapters.MessageAdapter
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ChatActivity : AppCompatActivity() {
+class MessagesActivity : AppCompatActivity() {
 
     private val binding by lazy {
-        ActivityChatBinding.inflate(layoutInflater)
+        ActivityMessagesBinding.inflate(layoutInflater)
     }
 
-    private val chatViewModel by lazy {
-        ViewModelProvider(this)[ChatViewModel::class.java]
+    private val messagesViewModel by lazy {
+        ViewModelProvider(this)[MessagesViewModel::class.java]
     }
 
-    private lateinit var chatAdapter: ChatAdapter
-    private var dataRemitted: UserModel? = null
+    private lateinit var messageAdapter: MessageAdapter
+    private var dataUserReceived: UserModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setEdgeToEdgeLayout()
-        getUserDataRemitted()
+        getReceivedUserData()
         initToolbar()
         initListeners()
         addObservers()
-        chatViewModel.getChats(dataRemitted!!.id)
+        messagesViewModel.getMessages(dataUserReceived!!.id)
         initRecyclerView()
     }
 
 
     override fun onStop() {
-        chatViewModel.clearObserver()
-        chatViewModel.chatsResult.removeObservers(this)
-        chatViewModel.messageResult.removeObservers(this)
+        messagesViewModel.clearObserver()
+        messagesViewModel.messagesResult.removeObservers(this)
+        messagesViewModel.sendChatResult.removeObservers(this)
+        messagesViewModel.sendMessageResult.removeObservers(this)
         super.onStop()
     }
 
     private fun initRecyclerView() {
         with(binding) {
-            chatAdapter = ChatAdapter(chatViewModel.getUserId())
+            messageAdapter = MessageAdapter(messagesViewModel.getUserId())
 
-            rvChats.adapter = chatAdapter
-            rvChats.layoutManager = LinearLayoutManager(this@ChatActivity)
+            rvMessages.adapter = messageAdapter
+            rvMessages.layoutManager = LinearLayoutManager(this@MessagesActivity)
         }
     }
 
     private fun addObservers() {
-        chatViewModel.chatsResult.observe(this) { result ->
-            result.onSuccess { chats ->
-                if (chats.isNotEmpty()) {
-                    chatAdapter.submitList(chats)
+        messagesViewModel.messagesResult.observe(this) { result ->
+            result.onSuccess { messages ->
+                if (messages.isNotEmpty()) {
+                    messageAdapter.submitList(messages)
                 }
 
             }
             result.onFailure { error ->
                 showMessage(
-                    "${getString(R.string.error_get_chats)}:" +
+                    "${getString(R.string.error_get_messages)}:" +
                             " ${error.message}"
                 )
             }
         }
 
-        chatViewModel.messageResult.observe(this) { result ->
+        messagesViewModel.sendChatResult.observe(this) { result ->
+            result.onFailure { error ->
+                showMessage(
+                    "${getString(R.string.error_get_chat)}:" +
+                            " ${error.message}"
+                )
+            }
+        }
+
+        messagesViewModel.sendMessageResult.observe(this) { result ->
             result.onFailure { error ->
                 showMessage(
                     "${getString(R.string.error_send_message)}:" +
@@ -88,32 +98,39 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
-        binding.fabSendChat.setOnClickListener {
-            val message = binding.editChats.text.toString()
+        binding.fabSendMessage.setOnClickListener {
+            val message = binding.editMessage.text.toString()
 
             if (message.isNotEmpty()) {
-                chatViewModel.sendMessage(
+                messagesViewModel.sendMessage(
                     message,
-                    dataRemitted!!.id,
+                    dataUserReceived!!.id,
                 )
 
-                binding.editChats.text?.clear()
+                messagesViewModel.sendChat(
+                    dataUserReceived!!.id,
+                    dataUserReceived!!.photo,
+                    dataUserReceived!!.name,
+                    message,
+                )
+
+                binding.editMessage.text?.clear()
             }
         }
     }
 
     private fun initToolbar() {
-        val toolbar = binding.tbChat
+        val toolbar = binding.tbMessages
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
             title = ""
 
-            if (dataRemitted == null)
+            if (dataUserReceived == null)
                 return
 
-            binding.textName.text = dataRemitted!!.name
+            binding.textName.text = dataUserReceived!!.name
             Picasso.get()
-                .load(dataRemitted!!.photo)
+                .load(dataUserReceived!!.photo)
                 .into(binding.imagePhotoProfile)
 
 
@@ -121,7 +138,8 @@ class ChatActivity : AppCompatActivity() {
         }
     }
 
-    private fun getUserDataRemitted() {
+    private fun getReceivedUserData() {
+        // get received user data
         val extras = intent.extras
 
         if (extras == null)
@@ -130,7 +148,7 @@ class ChatActivity : AppCompatActivity() {
         val origin = extras.getString("origin")
 
         if (origin == Constants.CONTACT_ORIGIN) {
-            dataRemitted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            dataUserReceived = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 extras.getParcelable(
                     "remitted",
                     UserModel::class.java,

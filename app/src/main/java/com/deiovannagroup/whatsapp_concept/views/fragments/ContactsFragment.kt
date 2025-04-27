@@ -14,7 +14,7 @@ import com.deiovannagroup.whatsapp_concept.R
 import com.deiovannagroup.whatsapp_concept.databinding.FragmentContactsBinding
 import com.deiovannagroup.whatsapp_concept.utils.Constants
 import com.deiovannagroup.whatsapp_concept.viewmodels.ContactsViewModel
-import com.deiovannagroup.whatsapp_concept.views.activities.ChatActivity
+import com.deiovannagroup.whatsapp_concept.views.activities.MessagesActivity
 import com.deiovannagroup.whatsapp_concept.views.adapters.ContactsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,7 +41,7 @@ class ContactsFragment : Fragment() {
         contactsAdapter = ContactsAdapter { contact ->
             val intent = Intent(
                 context,
-                ChatActivity::class.java,
+                MessagesActivity::class.java,
             )
 
             intent.putExtra("remitted", contact)

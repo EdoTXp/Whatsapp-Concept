@@ -6,5 +6,5 @@
 
     <color name="colorPrimary">#FF0F8068</color>
     <color name="colorPrimaryVariant">#FF16A984</color>
-    <color name="colorBackgroundChatReceived">#FFDBF9C4</color>
+    <color name="colorBackgroundMessageReceived">#FFDBF9C4</color>
 </resources>

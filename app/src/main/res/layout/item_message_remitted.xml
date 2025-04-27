@@ -6,10 +6,10 @@
     android:padding="8dp">
 
     <TextView
-        android:id="@+id/text_chat_remitted"
+        android:id="@+id/text_message_remitted"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_chat_remitted"
+        android:background="@drawable/background_message_remitted"
         android:padding="8dp"
         android:text="@string/chat_message_place_holder"
         android:textSize="20sp"
