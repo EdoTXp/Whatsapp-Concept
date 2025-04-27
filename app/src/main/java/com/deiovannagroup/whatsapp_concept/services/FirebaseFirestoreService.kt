@@ -109,6 +109,7 @@ class FirebaseFirestoreService {
             firestore.collection(COLLECTION_CHATS)
                 .document(userId)
                 .collection(COLLECTION_LAST_CHATS)
+                .orderBy("date", Query.Direction.DESCENDING)
                 .addSnapshotListener { querySnapshot, error ->
                     if (error != null) {
                         trySend(Result.failure(Throwable("Error getting chats: ${error.message}")))
