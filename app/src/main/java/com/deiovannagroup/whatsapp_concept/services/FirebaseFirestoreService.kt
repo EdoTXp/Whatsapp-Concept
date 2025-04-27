@@ -104,6 +104,36 @@ class FirebaseFirestoreService {
         }
     }
 
+    fun getChats(userId: String): Flow<Result<List<ChatModel>>> = callbackFlow {
+        val listenerRegistration =
+            firestore.collection(COLLECTION_CHATS)
+                .document(userId)
+                .collection(COLLECTION_LAST_CHATS)
+                .addSnapshotListener { querySnapshot, error ->
+                    if (error != null) {
+                        trySend(Result.failure(Throwable("Error getting chats: ${error.message}")))
+                        return@addSnapshotListener
+                    }
+
+                    val chats = mutableListOf<ChatModel>()
+                    val documents = querySnapshot?.documents
+
+                    documents?.forEach { documentSnapshot ->
+                        val chat = documentSnapshot.toObject(ChatModel::class.java)
+                        if (chat == null) {
+                            return@forEach
+                        }
+                        chats.add(chat)
+                    }
+
+                    trySend(Result.success(chats))
+                }
+
+        awaitClose {
+            listenerRegistration.remove()
+        }
+    }
+
     fun updateProfile(userId: String, data: Map<String, String>): Result<Unit> {
         try {
             firestore

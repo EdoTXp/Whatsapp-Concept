@@ -8,7 +8,7 @@ import com.deiovannagroup.whatsapp_concept.models.ChatModel
 import com.deiovannagroup.whatsapp_concept.models.MessageModel
 import com.deiovannagroup.whatsapp_concept.models.UserModel
 import com.deiovannagroup.whatsapp_concept.repositories.AuthRepository
-import com.deiovannagroup.whatsapp_concept.repositories.ChatRepository
+import com.deiovannagroup.whatsapp_concept.repositories.ChatsRepository
 import com.deiovannagroup.whatsapp_concept.repositories.MessageRepository
 import com.deiovannagroup.whatsapp_concept.repositories.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +21,7 @@ class MessagesViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val messageRepository: MessageRepository,
     private val userRepository: UserRepository,
-    private val chatRepository: ChatRepository,
+    private val chatsRepository: ChatsRepository,
 ) : ViewModel() {
 
     private val _sendMessageResult = MutableLiveData<Result<Unit>>()
@@ -123,7 +123,7 @@ class MessagesViewModel @Inject constructor(
                 name,
                 message,
             )
-            _sendChatResult.value = chatRepository.sendChat(chatRemitter)
+            _sendChatResult.value = chatsRepository.sendChat(chatRemitter)
 
             // Send chat for received
             val chatReceived = ChatModel(
@@ -133,7 +133,7 @@ class MessagesViewModel @Inject constructor(
                 name,
                 message,
             )
-            _sendChatResult.value = chatRepository.sendChat(chatReceived)
+            _sendChatResult.value = chatsRepository.sendChat(chatReceived)
         }
     }
 }
