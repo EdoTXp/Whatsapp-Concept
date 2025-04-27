@@ -29,6 +29,10 @@ class ChatViewModel @Inject constructor(
         getChatsJob?.cancel()
     }
 
+    fun getUserId(): String {
+        return authRepository.getCurrentLoggedUser()?.id.toString()
+    }
+
     fun getChats(idUserReceived: String?) {
         getChatsJob = viewModelScope.launch {
             val idUserRemitted = authRepository.getCurrentLoggedUser()?.id

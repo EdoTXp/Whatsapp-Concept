@@ -2,18 +2,19 @@ package com.deiovannagroup.whatsapp_concept.views.activities
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.deiovannagroup.whatsapp_concept.R
 import com.deiovannagroup.whatsapp_concept.viewmodels.ChatViewModel
 import com.deiovannagroup.whatsapp_concept.databinding.ActivityChatBinding
 import com.deiovannagroup.whatsapp_concept.models.UserModel
 import com.deiovannagroup.whatsapp_concept.utils.Constants
 import com.deiovannagroup.whatsapp_concept.utils.showMessage
+import com.deiovannagroup.whatsapp_concept.views.adapters.ChatAdapter
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,6 +29,7 @@ class ChatActivity : AppCompatActivity() {
         ViewModelProvider(this)[ChatViewModel::class.java]
     }
 
+    private lateinit var chatAdapter: ChatAdapter
     private var dataRemitted: UserModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +40,9 @@ class ChatActivity : AppCompatActivity() {
         initListeners()
         addObservers()
         chatViewModel.getChats(dataRemitted!!.id)
+        initRecyclerView()
     }
+
 
     override fun onStop() {
         chatViewModel.clearObserver()
@@ -47,13 +51,20 @@ class ChatActivity : AppCompatActivity() {
         super.onStop()
     }
 
+    private fun initRecyclerView() {
+        with(binding) {
+            chatAdapter = ChatAdapter(chatViewModel.getUserId())
+
+            rvChats.adapter = chatAdapter
+            rvChats.layoutManager = LinearLayoutManager(this@ChatActivity)
+        }
+    }
+
     private fun addObservers() {
         chatViewModel.chatsResult.observe(this) { result ->
             result.onSuccess { chats ->
                 if (chats.isNotEmpty()) {
-                    chats.forEach { chat ->
-                        Log.i("chat_result", "User: ${chat.idUser}, Message: ${chat.message}")
-                    }
+                    chatAdapter.submitList(chats)
                 }
 
             }
