@@ -1,38 +1,43 @@
 [versions]
-agp = "8.9.2"
-googleServices = "4.4.2"
-firebaseAuthKtx = "23.2.0"
-firebaseBom = "33.13.0"
+agp = "8.11.1"
+googleServices = "4.4.3"
+firebaseAuthKtx = "23.2.1"
+firebaseBom = "34.0.0"
 firebaseFirestoreKtx = "25.1.4"
-googleDevtoolsKsp = "2.1.10-1.0.31"
-hiltCompiler = "2.56.2"
+googleDevtoolsKsp = "2.2.0-2.0.2"
+hiltCompiler = "2.57"
 hiltNavigationCompose = "1.2.0"
-kotlin = "2.1.10"
+kotlin = "2.2.0"
 coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
+kotlinx-coroutines-test = "1.10.2"
 espressoCore = "3.6.1"
-appcompat = "1.7.0"
-lifecycleViewmodelKtx = "2.8.7"
+appcompat = "1.7.1"
+lifecycleViewmodelKtx = "2.9.2"
 material = "1.12.0"
 activity = "1.10.1"
 constraintlayout = "2.2.1"
-picasso = "2.8"
+picasso = "2.71828"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics", version = "23.0.0" }
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
-firebase-storage-ktx = { module = "com.google.firebase:firebase-storage-ktx" }
+firebase-storage-ktx = { module = "com.google.firebase:firebase-storage-ktx", version = "21.0.2" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltCompiler" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version = "5.18.0" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version = "6.0.0" }
+mockito-inline = { group = "org.mockito", name = "mockito-inline", version = "5.2.0" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines-test" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
@@ -45,5 +50,5 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltCompiler" }
 devtool-ksp = { id = "com.google.devtools.ksp", version.ref = "googleDevtoolsKsp" }
-kotlin-parcelize = {id = "kotlin-parcelize"}
+kotlin-parcelize = { id = "kotlin-parcelize" }
 

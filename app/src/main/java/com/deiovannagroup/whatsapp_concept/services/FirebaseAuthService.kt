@@ -1,7 +1,6 @@
 package com.deiovannagroup.whatsapp_concept.services
 
 import com.deiovannagroup.whatsapp_concept.models.UserModel
-
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -9,10 +8,20 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import kotlinx.coroutines.tasks.await
 
-
+/**
+ * Service class responsible for handling Firebase Authentication operations.
+ * Provides methods for user sign up, sign in, sign out, and user session management.
+ */
 class FirebaseAuthService {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
+    /**
+     * Registers a new user with the provided email and password.
+     *
+     * @param email The email address of the user to register.
+     * @param password The password for the new user.
+     * @return [Result] containing the created [UserModel] on success, or an error on failure.
+     */
     suspend fun signUpUser(email: String, password: String): Result<UserModel> {
         try {
             val authResult = auth.createUserWithEmailAndPassword(
@@ -47,6 +56,13 @@ class FirebaseAuthService {
         }
     }
 
+    /**
+     * Authenticates a user with the provided email and password.
+     *
+     * @param email The email address of the user to sign in.
+     * @param password The password for the user.
+     * @return [Result] containing the authenticated [UserModel] on success, or an error on failure.
+     */
     suspend fun signInUser(email: String, password: String): Result<UserModel> {
         try {
             val loginResult = auth.signInWithEmailAndPassword(
@@ -76,10 +92,18 @@ class FirebaseAuthService {
         }
     }
 
+    /**
+     * Signs out the currently authenticated user.
+     */
     fun signOutUser() {
         auth.signOut()
     }
 
+    /**
+     * Retrieves the currently logged-in user as a [UserModel].
+     *
+     * @return The [UserModel] of the current user, or null if no user is logged in.
+     */
     fun getCurrentLoggedUser(): UserModel? {
         return auth.currentUser?.let {
             UserModel(
@@ -91,6 +115,11 @@ class FirebaseAuthService {
         }
     }
 
+    /**
+     * Checks if a user is currently logged in.
+     *
+     * @return True if a user is logged in, false otherwise.
+     */
     fun checkUserIsLogged(): Boolean {
         val currentUser = auth.currentUser
         return currentUser != null

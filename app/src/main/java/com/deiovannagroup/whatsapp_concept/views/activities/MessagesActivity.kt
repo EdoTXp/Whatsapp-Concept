@@ -65,6 +65,7 @@ class MessagesActivity : AppCompatActivity() {
             result.onSuccess { messages ->
                 if (messages.isNotEmpty()) {
                     messageAdapter.submitList(messages)
+                    binding.rvMessages.scrollToPosition(messageAdapter.itemCount - 1)
                 }
 
             }
